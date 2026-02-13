@@ -20,6 +20,5 @@ com.google.android.safetycore
 ```
 
 ### Usage
-* Enable zygisk in Magisk **or flash a Zygisk module if you are on KernelSU**
-* Flash zygisk-detach module
+* Flash ksu_hide_apps_crDroid module
 * Reboot
