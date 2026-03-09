@@ -1,3 +1,4 @@
+# Remove donate nudge and uninstall packagesremove packages and disable donate nudge
 # Hide List Apps from crDroid
 
 ```
