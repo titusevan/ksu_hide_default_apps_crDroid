@@ -1,7 +1,28 @@
 #!/system/bin/sh
 
 (
+  while [ "$(getprop sys.boot_completed)" != "1" ]; do
+    sleep 2
+  done
+  
   sleep 30
+  
+  log -p i -t KSU_MODULE "Starting to remove packages and disable donate nudge..."
+
+  # --- Блок отключения уведомления о донатах ---
+  # Устанавливаем дату "последней проверки" на 200 лет вперед (в миллисекундах)
+  # Это заставит DonateReceiver думать, что кулдаун в 30 дней еще не прошел
+  log -p i -t KSU_MODULE "Starting: Disable Donate Nudge & Cleanup"
+  FUTURE_DATE="64060588800000"
+  
+  # Пытаемся записать через settings put (самый надежный метод для системных настроек)
+  settings put global pref_donate_checked_in $FUTURE_DATE
+  settings put secure pref_donate_checked_in $FUTURE_DATE
+  settings put system pref_donate_checked_in $FUTURE_DATE
+  
+  # Дополнительно пытаемся "заморозить" сам ресивер, если это возможно
+  pm disable com.android.settings/com.crdroid.settings.fragments.about.DonateReceiver > /dev/null 2>&1
+  
   log -p i -t KSU_MODULE "Starting to remove packages..."
 
   pm uninstall -k --user 0 com.android.stk
