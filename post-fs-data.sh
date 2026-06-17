@@ -14,6 +14,10 @@
   # Это заставит DonateReceiver думать, что кулдаун в 30 дней еще не прошел
   log -p i -t KSU_MODULE "Starting: Disable Donate Nudge & Cleanup"
   FUTURE_DATE="64060588800000"
+
+  # Отключаем плашку Live Captions (живых субтитров) в панели громкости
+  settings put secure odi_captions_volume_ui_enabled 0
+  adb shell settings put global asst_caption_enabled 0
   
   # Пытаемся записать через settings put (самый надежный метод для системных настроек)
   settings put global pref_donate_checked_in $FUTURE_DATE
